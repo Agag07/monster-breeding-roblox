@@ -1,0 +1,13 @@
+{
+  "name": "mi-juego-roblox",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "src": {
+        "$path": "src"
+      }
+    }
+  },
+  "servePort": 34872
+}
