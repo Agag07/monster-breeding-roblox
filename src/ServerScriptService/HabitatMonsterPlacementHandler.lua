@@ -1,4 +1,4 @@
--- HabitatMonsterPlacementHandler.lua (ServerScript in ServerScriptService)
+ï»¿-- HabitatMonsterPlacementHandler.lua (ServerScript in ServerScriptService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -244,7 +244,7 @@ local function createMonsterInHabitat(habitat, monsterData)
 	rarityLabel.Size = UDim2.new(1, 0, 0.4, 0)
 	rarityLabel.Position = UDim2.new(0, 0, 0.6, 0)
 	rarityLabel.BackgroundTransparency = 1
-	rarityLabel.Text = monsterData.rarity .. " • LVL " .. monsterData.level
+	rarityLabel.Text = monsterData.rarity .. " ï¿½ LVL " .. monsterData.level
 	rarityLabel.TextColor3 = getRarityColor(monsterData.rarity)
 	rarityLabel.TextSize = 10
 	rarityLabel.Font = Enum.Font.Gotham

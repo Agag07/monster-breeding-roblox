@@ -1,4 +1,4 @@
--- BreedingGUI.lua (LocalScript) - Put in StarterGui/BreedingGui
+ï»¿-- BreedingGUI.lua (LocalScript) - Put in StarterGui/BreedingGui
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -181,7 +181,7 @@ local function createMonsterCard(monsterData, scrollFrame, parentNumber)
 	elementsLabel.Size = UDim2.new(0, 100, 0, 20)
 	elementsLabel.Position = UDim2.new(0, 60, 0, 35)
 	elementsLabel.BackgroundTransparency = 1
-	elementsLabel.Text = monsterData.element:gsub(",", " • ")
+	elementsLabel.Text = monsterData.element:gsub(",", " ï¿½ ")
 	elementsLabel.TextColor3 = Color3.fromRGB(200, 200, 255)
 	elementsLabel.TextSize = 12
 	elementsLabel.Font = Enum.Font.Gotham
@@ -325,7 +325,7 @@ function updateSelectedDisplay(displayFrame, monsterData)
 		details.Size = UDim2.new(1, -10, 0, 40)
 		details.Position = UDim2.new(0, 5, 0, 110)
 		details.BackgroundTransparency = 1
-		details.Text = monsterData.element .. "\n" .. monsterData.rarity .. " • Lv." .. monsterData.level
+		details.Text = monsterData.element .. "\n" .. monsterData.rarity .. " ï¿½ Lv." .. monsterData.level
 		details.TextColor3 = RARITY_COLORS[monsterData.rarity] or Color3.fromRGB(200, 200, 200)
 		details.TextSize = 12
 		details.Font = Enum.Font.Gotham

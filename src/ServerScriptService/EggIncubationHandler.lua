@@ -1,4 +1,4 @@
--- EggIncubationHandler.lua (ServerScriptService) - COMPLETE VERSION WITH HYBRID SUPPORT - CORREGIDO
+﻿-- EggIncubationHandler.lua (ServerScriptService) - COMPLETE VERSION WITH HYBRID SUPPORT - CORREGIDO
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")

@@ -1,4 +1,4 @@
--- EggShopClient.lua (Updated Version)
+﻿-- EggShopClient.lua (Updated Version)
 -- Put this as LocalScript inside your EggShopGui
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

@@ -1,4 +1,4 @@
--- MonsterCollectionUI.lua (Fixed - Complete Version)
+ï»¿-- MonsterCollectionUI.lua (Fixed - Complete Version)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -103,7 +103,7 @@ local function updateMonsterDisplay(monsterData)
 		-- Hybrid with 2 elements
 		local icon1 = ElementIcons[monsterData.Elements[1]] or "?"
 		local icon2 = ElementIcons[monsterData.Elements[2]] or "?"
-		elementLabel.Text = icon1 .. " " .. monsterData.Elements[1] .. " • " .. icon2 .. " " .. monsterData.Elements[2]
+		elementLabel.Text = icon1 .. " " .. monsterData.Elements[1] .. " ï¿½ " .. icon2 .. " " .. monsterData.Elements[2]
 		elementLabel.TextColor3 = ElementColors[monsterData.Elements[1]] or Color3.fromRGB(200, 200, 200)
 	elseif type(monsterData.Elements) == "table" then
 		-- Single element in array

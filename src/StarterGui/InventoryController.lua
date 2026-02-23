@@ -1,4 +1,4 @@
--- StarterGui/InventoryGui/InventoryController (COMPLETE - WITH BUILDINGS)
+﻿-- StarterGui/InventoryGui/InventoryController (COMPLETE - WITH BUILDINGS)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")

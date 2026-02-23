@@ -1,4 +1,4 @@
--- ServerScriptService/RemoveHabitatHandler.lua (COMPLETE FIXED VERSION)
+﻿-- ServerScriptService/RemoveHabitatHandler.lua (COMPLETE FIXED VERSION)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameDataManager = require(game.ServerScriptService.Systems.GameDataManager)
 
