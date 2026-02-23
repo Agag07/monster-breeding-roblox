@@ -1,4 +1,4 @@
--- CLIENT SCRIPT: Habitat Shop Controller (COMPLETE - FIXED PRICES)
+﻿-- CLIENT SCRIPT: Habitat Shop Controller (COMPLETE - FIXED PRICES)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")

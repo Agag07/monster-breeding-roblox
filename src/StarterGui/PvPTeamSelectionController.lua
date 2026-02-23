@@ -1,4 +1,4 @@
--- PvPTeamSelectionController.lua (LocalScript in PvPGui)
+﻿-- PvPTeamSelectionController.lua (LocalScript in PvPGui)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")

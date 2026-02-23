@@ -1,4 +1,4 @@
--- ShopDataModule.lua (COMPLETE - FIXED SYNTAX)
+﻿-- ShopDataModule.lua (COMPLETE - FIXED SYNTAX)
 local ShopDataModule = {}
 
 -- HABITAT & INCUBATOR & BUILDING SHOP

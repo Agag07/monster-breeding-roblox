@@ -1,4 +1,4 @@
--- HabitatInteractionDetector.lua (LocalScript in StarterGui) - FIXED VERSION
+﻿-- HabitatInteractionDetector.lua (LocalScript in StarterGui) - FIXED VERSION
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")

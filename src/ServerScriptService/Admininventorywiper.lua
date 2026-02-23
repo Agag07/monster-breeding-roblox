@@ -1,4 +1,4 @@
--- ADMIN INVENTORY WIPER (PROFILESERVICE VERSION)
+﻿-- ADMIN INVENTORY WIPER (PROFILESERVICE VERSION)
 -- Put this in ServerScriptService as a Script (NOT LocalScript)
 -- Type "/wipe" in chat to PERMANENTLY clear your inventory
 

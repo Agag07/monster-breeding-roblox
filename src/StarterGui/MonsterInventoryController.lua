@@ -1,4 +1,4 @@
--- MonsterInventoryController.lua (COMPLETE - WITH DUAL ELEMENT SUPPORT)
+ï»¿-- MonsterInventoryController.lua (COMPLETE - WITH DUAL ELEMENT SUPPORT)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -110,7 +110,7 @@ local function formatElementDisplay(elements)
 		-- Hybrid: Show both elements
 		local icon1 = ElementIcons[elements[1]] or "?"
 		local icon2 = ElementIcons[elements[2]] or "?"
-		return icon1 .. " • " .. icon2, elements[1]  -- Return display text and primary color
+		return icon1 .. " ï¿½ " .. icon2, elements[1]  -- Return display text and primary color
 	elseif type(elements) == "table" and #elements == 1 then
 		-- Single element from array
 		local element = elements[1]

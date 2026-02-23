@@ -1,4 +1,4 @@
--- ServerScriptService/FixedBreedingMachineSystem.lua
+﻿-- ServerScriptService/FixedBreedingMachineSystem.lua
 -- SIMPLIFIED VERSION - Uses existing breeding machines in workspace
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")

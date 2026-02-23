@@ -1,4 +1,4 @@
--- ServerScriptService/PlaceHabitatHandler.lua (COMPLETE FIXED VERSION)
+﻿-- ServerScriptService/PlaceHabitatHandler.lua (COMPLETE FIXED VERSION)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HabitatModels = ReplicatedStorage:WaitForChild("HabitatModels")
 local PlaceHabitatRemote = ReplicatedStorage:WaitForChild("PlaceHabitat")

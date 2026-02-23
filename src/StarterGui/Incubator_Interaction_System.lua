@@ -1,4 +1,4 @@
--- IncubatorInteractionClient.lua (Physical UI Version) - FIXED
+﻿-- IncubatorInteractionClient.lua (Physical UI Version) - FIXED
 -- Put this as LocalScript inside your IncubatorInteractionGui
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

@@ -1,4 +1,4 @@
--- HabitatMonsterSelectionController.lua (COMPLETE - REDESIGNED WITH SLOTS & POPUP)
+ï»¿-- HabitatMonsterSelectionController.lua (COMPLETE - REDESIGNED WITH SLOTS & POPUP)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -179,7 +179,7 @@ local function createMonsterSelectionCard(monsterData, layoutOrder)
 	infoLabel.Size = UDim2.new(1, -10, 0, 18)
 	infoLabel.Position = UDim2.new(0, 5, 0, 100)
 	infoLabel.BackgroundTransparency = 1
-	infoLabel.Text = "LVL " .. monsterData.level .. " • " .. monsterData.rarity
+	infoLabel.Text = "LVL " .. monsterData.level .. " ï¿½ " .. monsterData.rarity
 	infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 	infoLabel.TextSize = 11
 	infoLabel.Font = Enum.Font.Gotham
@@ -432,7 +432,7 @@ local function createMonsterSlot(slotIndex, maxCapacity, monsterData)
 		infoLabel.Size = UDim2.new(1, -10, 0, 20)
 		infoLabel.Position = UDim2.new(0, 5, 0, 125)
 		infoLabel.BackgroundTransparency = 1
-		infoLabel.Text = "LVL " .. monsterData.level .. " • " .. monsterData.rarity
+		infoLabel.Text = "LVL " .. monsterData.level .. " ï¿½ " .. monsterData.rarity
 		infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 		infoLabel.TextSize = 11
 		infoLabel.Font = Enum.Font.Gotham

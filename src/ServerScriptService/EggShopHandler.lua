@@ -1,4 +1,4 @@
--- EggShopHandler.lua (Uses ShopDataModule)
+﻿-- EggShopHandler.lua (Uses ShopDataModule)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameDataManager = require(game.ServerScriptService.Systems.GameDataManager)
 local ShopDataModule = require(game.ServerScriptService.ShopDataModule)

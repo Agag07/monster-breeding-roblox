@@ -1,4 +1,4 @@
--- MonsterRemovalHandler.lua (ServerScriptService)
+﻿-- MonsterRemovalHandler.lua (ServerScriptService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local GameDataManager = require(game.ServerScriptService.Systems.GameDataManager)

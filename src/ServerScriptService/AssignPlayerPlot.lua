@@ -1,4 +1,4 @@
-local Players = game:GetService("Players")
+﻿local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 
 -- ?? Find a free plot inside Workspace.PlotsF
