@@ -54,6 +54,39 @@
       "$className": "StarterGui",
       "HabitatInteractionDetector": {
         "$path": "src/StarterGui/HabitatInteractionDetector.lua"
+      },
+      "Incubator_Interaction_System": {
+        "$path": "src/StarterGui/Incubator_Interaction_System.lua"
+      },
+      "HabitatShopScript": {
+        "$path": "src/StarterGui/HabitatShopScript.lua"
+      },
+      "EggShopClient": {
+        "$path": "src/StarterGui/EggShopClient.lua"
+      },
+      "EggOpeningAnimationController": {
+        "$path": "src/StarterGui/EggOpeningAnimationController.lua"
+      },
+      "UnlockController": {
+        "$path": "src/StarterGui/UnlockController.lua"
+      },
+      "PvPTeamSelectionController": {
+        "$path": "src/StarterGui/PvPTeamSelectionController.lua"
+      },
+      "MonsterCollectionScript": {
+        "$path": "src/StarterGui/MonsterCollectionScript.lua"
+      },
+      "InventoryController": {
+        "$path": "src/StarterGui/InventoryController.lua"
+      },
+      "HabitatMonsterSelectionController": {
+        "$path": "src/StarterGui/HabitatMonsterSelectionController.lua"
+      },
+      "BreedingGuI": {
+        "$path": "src/StarterGui/BreedingGuI.lua"
+      },
+      "MonsterInventoryController": {
+        "$path": "src/StarterGui/MonsterInventoryController.lua"
       }
     }
   },
