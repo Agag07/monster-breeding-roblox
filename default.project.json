@@ -1,11 +1,59 @@
 {
-  "name": "mi-juego-roblox",
+  "name": "monster-breeding-roblox",
   "tree": {
     "$className": "DataModel",
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
-      "src": {
-        "$path": "src"
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Systems": {
+        "$path": "src/ServerScriptService/Systems"
+      },
+      "AssignPlayerPlot": {
+        "$path": "src/ServerScriptService/AssignPlayerPlot.lua"
+      },
+      "Admininventorywiper": {
+        "$path": "src/ServerScriptService/Admininventorywiper.lua"
+      },
+      "IncubatorPlacementHandler": {
+        "$path": "src/ServerScriptService/IncubatorPlacementHandler.lua"
+      },
+      "HabitatUpgradeHandler": {
+        "$path": "src/ServerScriptService/HabitatUpgradeHandler.lua"
+      },
+      "EggShopHandler": {
+        "$path": "src/ServerScriptService/EggShopHandler.lua"
+      },
+      "EggIncubationHandler": {
+        "$path": "src/ServerScriptService/EggIncubationHandler.lua"
+      },
+      "CombinedShopHandler": {
+        "$path": "src/ServerScriptService/CombinedShopHandler.lua"
+      },
+      "RemoveHabitatHandler": {
+        "$path": "src/ServerScriptService/RemoveHabitatHandler.lua"
+      },
+      "MonsterRemovalHandler": {
+        "$path": "src/ServerScriptService/MonsterRemovalHandler.lua"
+      },
+      "MonsterHabitatSystem": {
+        "$path": "src/ServerScriptService/MonsterHabitatSystem.lua"
+      },
+      "PlaceHabitatHandler": {
+        "$path": "src/ServerScriptService/PlaceHabitatHandler.lua"
+      },
+      "BreedingHandler": {
+        "$path": "src/ServerScriptService/BreedingHandler.lua"
+      },
+      "FixedBreedingMachineSystem": {
+        "$path": "src/ServerScriptService/FixedBreedingMachineSystem.lua"
+      },
+      "HabitatMonsterPlacementHandler": {
+        "$path": "src/ServerScriptService/HabitatMonsterPlacementHandler.lua"
+      }
+    },
+    "StarterGui": {
+      "$className": "StarterGui",
+      "HabitatInteractionDetector": {
+        "$path": "src/StarterGui/HabitatInteractionDetector.lua"
       }
     }
   },

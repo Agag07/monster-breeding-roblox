@@ -1,0 +1,12 @@
+node_modules/
+.env
+.DS_Store
+*.sublime-workspace
+.vscode/
+*.log
+juegos-scripts.rbxl
+juegos scripts.rbxl
+extract-scripts.js
+webhook.js
+package-lock.json
+.git/
