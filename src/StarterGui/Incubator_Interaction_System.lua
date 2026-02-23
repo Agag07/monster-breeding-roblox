@@ -1,4 +1,4 @@
--- IncubatorInteractionClient.lua (Physical UI Version)
+-- IncubatorInteractionClient.lua (Physical UI Version) - FIXED
 -- Put this as LocalScript inside your IncubatorInteractionGui
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -290,15 +290,32 @@ closeButton.MouseButton1Click:Connect(function()
 	closeIncubatorUI()
 end)
 
--- Handle clicking on incubators in the world
+-- Handle clicking on incubators in the world - FIXED
 mouse.Button1Down:Connect(function()
 	local target = mouse.Target
 	if target then
 		-- Check if clicking on an incubator in player's plot
 		local plotName = player:GetAttribute("AssignedPlot")
-		local plot = workspace:FindFirstChild("PlotsF") and workspace.PlotsF:FindFirstChild(plotName)
+		
+		-- FIXED: Validate plotName is not nil
+		if not plotName then
+			print("? Player has no assigned plot yet")
+			return
+		end
+		
+		local plotsFolder = workspace:FindFirstChild("PlotsF")
+		if not plotsFolder then
+			print("? PlotsF folder not found in workspace")
+			return
+		end
+		
+		local plot = plotsFolder:FindFirstChild(plotName)
+		if not plot then
+			print("? Plot not found:", plotName)
+			return
+		end
 
-		if plot and target:IsDescendantOf(plot) then
+		if target:IsDescendantOf(plot) then
 			local object = target
 			while object and object.Parent ~= plot do
 				object = object.Parent
