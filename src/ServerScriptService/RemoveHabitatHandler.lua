@@ -14,14 +14,20 @@ local Plots = workspace:WaitForChild("PlotsF")
 
 -- Habitat prices for refund calculation (50% refund)
 local prices = {
-	["Fire"] = 150,     -- CHANGED
-	["Water"] = 150,    -- CHANGED
-	["Earth"] = 150,    -- CHANGED
-	["Plant"] = 150,    -- CHANGED
-	["Electric"] = 150, -- CHANGED
+	["Fire"] = 150,
+	["Water"] = 150,
+	["Earth"] = 150,
+	["Plant"] = 150,
+	["Electric"] = 150,
 }
 
 removeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
+	-- Validate player - CORREGIDO
+	if not player or not player.Parent then
+		warn("? Invalid player")
+		return
+	end
+
 	local plotName = player:GetAttribute("AssignedPlot")
 	local plot = Plots:FindFirstChild(plotName)
 	if not plot then 
@@ -35,6 +41,13 @@ removeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 		return 
 	end
 
+	-- Verify ownership - CORREGIDO
+	local habitatOwner = habitat:GetAttribute("Owner")
+	if habitatOwner ~= player.UserId then
+		warn("? Player doesn't own this habitat")
+		return
+	end
+
 	-- Get habitat type from the ID
 	local habitatType = habitatId:match("^(.-)_")
 	if habitatType and prices[habitatType] then
@@ -44,27 +57,42 @@ removeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 		print("?? Refunded", refund, "coins to", player.Name)
 	end
 
-	-- Return habitat to inventory and remove from plot data
+	-- Return habitat to inventory and remove from plot data - CORREGIDO
 	local profile = GameDataManager:GetProfile(player)
 	if profile then
+		-- Validate profile structure
+		if not profile.Data then
+			warn("? Profile data invalid for player:", player.Name)
+			return
+		end
+
 		-- Find and remove from placed objects
-		local placedObjects = profile.Data.PlotData.PlacedObjects
-		for i = #placedObjects, 1, -1 do
-			if placedObjects[i].id == habitatId then
-				table.remove(placedObjects, i)
-				break
+		local placedObjects = profile.Data.PlotData and profile.Data.PlotData.PlacedObjects
+		if placedObjects then
+			for i = #placedObjects, 1, -1 do
+				if placedObjects[i].id == habitatId then
+					table.remove(placedObjects, i)
+					break
+				end
 			end
 		end
 
 		-- Mark habitat as not placed in inventory
-		if profile.Data.Inventory.Habitats[habitatId] then
+		if profile.Data.Inventory and profile.Data.Inventory.Habitats and profile.Data.Inventory.Habitats[habitatId] then
 			profile.Data.Inventory.Habitats[habitatId].placed = false
 		end
 
 		-- Sync to folders
-		GameDataManager:SyncDataToFolders(player, profile.Data)
+		if GameDataManager.SyncDataToFolders then
+			GameDataManager:SyncDataToFolders(player, profile.Data)
+		end
+	else
+		warn("? No profile found for player:", player.Name)
+		return
 	end
 
 	habitat:Destroy()
 	print("??? Habitat removed:", habitatId, "by", player.Name)
 end)
+
+print("? RemoveHabitatHandler loaded!")

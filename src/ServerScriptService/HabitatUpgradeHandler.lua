@@ -1,4 +1,4 @@
--- HabitatUpgradeHandler.lua (ServerScriptService)
+-- HabitatUpgradeHandler.lua (ServerScriptService) - CORREGIDO
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local GameDataManager = require(game.ServerScriptService.Systems.GameDataManager)
@@ -20,6 +20,12 @@ local UPGRADE_DATA = {
 -- Handle habitat upgrade
 upgradeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 	print("?? Upgrade request from", player.Name, "for habitat:", habitatId)
+
+	-- Validate player
+	if not player or not player.Parent then
+		warn("? Invalid player")
+		return
+	end
 
 	-- Get player's profile
 	local profile = GameDataManager:GetProfile(player)
@@ -44,10 +50,16 @@ upgradeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 		return
 	end
 
-	-- Get upgrade data
+	-- Get upgrade data with validation
 	local upgradeData = UPGRADE_DATA[currentLevel]
 	if not upgradeData then
 		warn("? No upgrade data for level:", currentLevel)
+		return
+	end
+
+	-- Validate upgrade data structure
+	if not upgradeData.cost or not upgradeData.nextLevel or not upgradeData.maxCapacity then
+		warn("? Invalid upgrade data structure for level:", currentLevel)
 		return
 	end
 
@@ -72,16 +84,11 @@ upgradeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 			-- Update level attribute
 			habitat:SetAttribute("Level", upgradeData.nextLevel)
 
-			-- Optional: Visual upgrade (change size, color, add particles, etc.)
-			local habitatElement = habitat:GetAttribute("Element")
+			-- Optional: Visual upgrade
 			if upgradeData.nextLevel == 2 then
-				-- Level 2 visual changes
 				print("? Applying Level 2 visual upgrade...")
-
-				-- Add glow effect
 				for _, part in pairs(habitat:GetDescendants()) do
 					if part:IsA("BasePart") then
-						-- Add subtle glow
 						local pointLight = part:FindFirstChild("UpgradeGlow")
 						if not pointLight then
 							pointLight = Instance.new("PointLight")
@@ -95,10 +102,7 @@ upgradeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 				end
 
 			elseif upgradeData.nextLevel == 3 then
-				-- Level 3 visual changes
 				print("? Applying Level 3 visual upgrade...")
-
-				-- Increase glow
 				for _, part in pairs(habitat:GetDescendants()) do
 					if part:IsA("BasePart") then
 						local pointLight = part:FindFirstChild("UpgradeGlow")
@@ -106,17 +110,12 @@ upgradeHabitatRemote.OnServerEvent:Connect(function(player, habitatId)
 							pointLight.Brightness = 1.0
 							pointLight.Range = 20
 						end
-
-						-- Add sparkle effect
 						part.Material = Enum.Material.Neon
 					end
 				end
 			end
 		end
 	end
-
-	-- Save to ProfileService
-	-- (ProfileService auto-saves, but this ensures it's tracked)
 
 	print("? Habitat upgraded to Level", upgradeData.nextLevel, "for", player.Name)
 	print("  +- New capacity:", upgradeData.maxCapacity)

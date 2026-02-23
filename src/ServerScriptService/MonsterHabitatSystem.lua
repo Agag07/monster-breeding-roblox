@@ -1,3 +1,4 @@
+local GameDataManager = require(game.ServerScriptService.Systems.GameDataManager)
 -- SERVER SCRIPT: MonsterHabitatSystem
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")

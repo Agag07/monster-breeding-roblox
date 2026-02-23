@@ -106,7 +106,7 @@ local function hidePrompt()
 end
 
 -- Function to get element color
-function getElementColor(element)
+local function getElementColor(element)
 	local ElementColors = {
 		Fire = Color3.fromRGB(255, 87, 34),
 		Water = Color3.fromRGB(33, 150, 243),
@@ -118,7 +118,7 @@ function getElementColor(element)
 end
 
 -- Function to get element icon
-function getElementIcon(element)
+local function getElementIcon(element)
 	local ElementIcons = {
 		Fire = "??",
 		Water = "??",

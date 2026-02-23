@@ -22,11 +22,10 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 		return
 	end
 
-	-- ?? FIX: Clone and ensure we always have a proper Model with attributes
+	-- Clone and ensure we always have a proper Model with attributes
 	local model
 
 	if baseModel:IsA("BasePart") then
-		-- If the base is just a Part, wrap it in a Model
 		print("?? Wrapping Part in Model for:", habitatType)
 
 		local wrapper = Instance.new("Model")
@@ -41,11 +40,10 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 		model = wrapper
 
 	elseif baseModel:IsA("Model") then
-		-- If it's already a Model, clone it
 		model = baseModel:Clone()
 		model.Name = habitatId
 
-		-- Ensure PrimaryPart exists
+		-- Ensure PrimaryPart exists - CORREGIDO
 		if not model.PrimaryPart then
 			local primary = model:FindFirstChildWhichIsA("BasePart")
 			if primary then
@@ -64,6 +62,12 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 	-- Verify we have a valid model with PrimaryPart
 	if not model.PrimaryPart then
 		warn("? Failed to create valid model with PrimaryPart")
+		return
+	end
+
+	-- CORREGIDO: Validar que PrimaryPart sea un BasePart v√°lido
+	if not model.PrimaryPart:IsA("BasePart") then
+		warn("? PrimaryPart is not a BasePart:", model.PrimaryPart.ClassName)
 		return
 	end
 
@@ -90,11 +94,11 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 		return
 	end
 
-	-- Position the model first (before adding to plot)
+	-- Position the model first
 	local finalCFrame = CFrame.new(pos) * CFrame.Angles(0, math.rad(rotation), 0)
 	model:PivotTo(finalCFrame)
 
-	-- ?? FIX: Set ownership attributes on the MODEL (not individual parts)
+	-- Set ownership attributes on the MODEL
 	model:SetAttribute("Owner", player.UserId)
 	model:SetAttribute("HabitatId", habitatId)
 	model:SetAttribute("Element", habitatType)
@@ -110,6 +114,10 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 		if other:IsA("Model") and other ~= model and other.Name ~= "Sign" and other:FindFirstChildWhichIsA("BasePart") then
 			local aCFrame, aSize = other:GetBoundingBox()
 			local bCFrame, bSize = model:GetBoundingBox()
+
+			if not aCFrame or not bCFrame then
+				continue
+			end
 
 			local aMin = aCFrame.Position - aSize / 2
 			local aMax = aCFrame.Position + aSize / 2
@@ -153,11 +161,11 @@ PlaceHabitatRemote.OnServerEvent:Connect(function(player, habitatId, position, r
 
 	-- Debug: Print attributes to verify they were set
 	print("  +- Attributes set:")
-	print("    ï Owner:", model:GetAttribute("Owner"))
-	print("    ï HabitatId:", model:GetAttribute("HabitatId"))
-	print("    ï Element:", model:GetAttribute("Element"))
-	print("    ï Type:", model:GetAttribute("Type"))
-	print("    ï Level:", model:GetAttribute("Level"))
+	print("    ? Owner:", model:GetAttribute("Owner"))
+	print("    ? HabitatId:", model:GetAttribute("HabitatId"))
+	print("    ? Element:", model:GetAttribute("Element"))
+	print("    ? Type:", model:GetAttribute("Type"))
+	print("    ? Level:", model:GetAttribute("Level"))
 end)
 
 print("? PlaceHabitatHandler loaded with Part wrapping fix")

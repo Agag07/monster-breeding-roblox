@@ -1,4 +1,4 @@
--- EggIncubationHandler.lua (ServerScriptService) - COMPLETE VERSION WITH HYBRID SUPPORT
+-- EggIncubationHandler.lua (ServerScriptService) - COMPLETE VERSION WITH HYBRID SUPPORT - CORREGIDO
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
@@ -97,6 +97,7 @@ local HYBRID_MONSTERS = {
 		BaseStats = {HP = 87, Attack = 57, Defense = 42, Speed = 62}
 	}
 }
+
 -- Rarity data
 local RarityData = {
 	Common = {weight = 50, statMultiplier = 1.0},
@@ -119,17 +120,15 @@ local function generateMonsterStats(eggData, customRarity)
 	local rarity = customRarity or (type(eggData) == "table" and eggData.rarity) or nil
 	local ivs = type(eggData) == "table" and eggData.ivs or nil
 
-	-- Handle legacy calls (when eggData is just a string eggType)
+	-- Handle legacy calls
 	if type(eggData) == "string" then
 		eggData = {type = eggData}
 	end
 
 	-- Check if this is a hybrid egg from breeding
 	if eggData.type == "HybridEgg" and eggData.monsterName then
-		-- Use the specific hybrid monster
 		selectedMonster = HYBRID_MONSTERS[eggData.monsterName]
 		if not selectedMonster then
-			-- Fallback to random base monster if hybrid not found
 			selectedMonster = BASE_MONSTERS[math.random(1, #BASE_MONSTERS)]
 		end
 	else
@@ -159,16 +158,14 @@ local function generateMonsterStats(eggData, customRarity)
 	-- Apply rarity multiplier to stats
 	local rarityMultiplier = RarityData[rarity].statMultiplier
 
-	-- Calculate final stats with IVs if provided
+	-- Calculate final stats with IVs
 	local stats = {}
 	for statName, baseValue in pairs(selectedMonster.BaseStats) do
 		local finalStat = math.floor(baseValue * rarityMultiplier)
 
-		-- Add IV bonus if available
 		if ivs and ivs[statName .. "IV"] then
 			finalStat = finalStat + ivs[statName .. "IV"]
 		else
-			-- Generate random IV if not inherited
 			local randomIV = math.random(0, 31)
 			finalStat = finalStat + randomIV
 			if not ivs then ivs = {} end
@@ -192,7 +189,6 @@ local function generateMonsterStats(eggData, customRarity)
 		Id = "Monster_" .. tostring(tick()) .. "_" .. math.random(1000, 9999)
 	}
 
-	-- Include IVs in the data
 	if ivs then
 		monsterData.HPIV = ivs.HPIV or math.random(0, 31)
 		monsterData.AttackIV = ivs.AttackIV or math.random(0, 31)
@@ -200,7 +196,6 @@ local function generateMonsterStats(eggData, customRarity)
 		monsterData.SpeedIV = ivs.SpeedIV or math.random(0, 31)
 	end
 
-	-- Add breeding heritage if it's a hybrid egg
 	if eggData.type == "HybridEgg" and eggData.parent1 and eggData.parent2 then
 		monsterData.Parent1 = eggData.parent1
 		monsterData.Parent2 = eggData.parent2
@@ -218,15 +213,12 @@ local function collectMonster(player, incubatorId)
 		return
 	end
 
-	-- Generate monster - pass the full eggData object
 	local monsterData = generateMonsterStats(eggData.eggData, eggData.eggData.rarity)
 
 	print("Monster generated:", monsterData.Name, "Rarity:", monsterData.Rarity, "Element:", monsterData.Element)
 
-	-- Show monster collection UI
 	showMonsterRemote:FireClient(player, monsterData)
 
-	-- Clean up egg and incubator
 	if eggData.eggModel then
 		eggData.eggModel:Destroy()
 	end
@@ -242,7 +234,7 @@ local function collectMonster(player, incubatorId)
 	print("Monster ready for collection by:", player.Name)
 end
 
--- Function to place egg model on incubator
+-- Function to place egg model on incubator - CORREGIDO
 local function placeEggModel(incubator, eggData)
 	local eggModel = EggModels:FindFirstChild("Egg1")
 	if not eggModel then
@@ -253,17 +245,33 @@ local function placeEggModel(incubator, eggData)
 	local clonedEgg = eggModel:Clone()
 	clonedEgg.Name = "IncubatedEgg"
 
-	-- Position egg above incubator
+	-- Position egg above incubator - VALIDAR BOUNDING BOX
 	local incubatorCF, incubatorSize = incubator:GetBoundingBox()
+	if not incubatorCF then
+		warn("Could not get bounding box for incubator")
+		clonedEgg:Destroy()
+		return nil
+	end
+
 	local eggPosition = incubatorCF.Position + Vector3.new(0, incubatorSize.Y/2 + 2, 0)
 
-	if clonedEgg.PrimaryPart then
-		clonedEgg:PivotTo(CFrame.new(eggPosition))
-	else
-		local eggPart = clonedEgg:FindFirstChildWhichIsA("BasePart")
-		if eggPart then
-			eggPart.Position = eggPosition
+	-- CORREGIDO: Validar PrimaryPart antes de usar
+	if clonedEgg:IsA("Model") then
+		if clonedEgg.PrimaryPart then
+			clonedEgg:PivotTo(CFrame.new(eggPosition))
+		else
+			local eggPart = clonedEgg:FindFirstChildWhichIsA("BasePart")
+			if eggPart then
+				clonedEgg.PrimaryPart = eggPart
+				clonedEgg:PivotTo(CFrame.new(eggPosition))
+			else
+				warn("Egg model has no BasePart!")
+				clonedEgg:Destroy()
+				return nil
+			end
 		end
+	else
+		clonedEgg.Position = eggPosition
 	end
 
 	-- Add egg data as attributes
@@ -276,7 +284,13 @@ local function placeEggModel(incubator, eggData)
 	clonedEgg.Parent = incubator
 
 	-- Add floating animation
-	local animatePart = clonedEgg.PrimaryPart or clonedEgg:FindFirstChildWhichIsA("BasePart")
+	local animatePart = nil
+	if clonedEgg:IsA("Model") and clonedEgg.PrimaryPart then
+		animatePart = clonedEgg.PrimaryPart
+	else
+		animatePart = clonedEgg:FindFirstChildWhichIsA("BasePart")
+	end
+
 	if animatePart then
 		local floatTween = game:GetService("TweenService"):Create(
 			animatePart,
@@ -294,24 +308,19 @@ local function makeEggReady(incubatorId, incubationData)
 	local eggModel = incubationData.eggModel
 	if not eggModel or not eggModel.Parent then return end
 
-	-- Mark egg as ready
 	eggModel:SetAttribute("IsReady", true)
 
-	-- Add visual effect
 	local eggPart = eggModel.PrimaryPart or eggModel:FindFirstChildWhichIsA("BasePart")
 	if eggPart then
-		-- Add glow effect
 		local pointLight = Instance.new("PointLight")
 		pointLight.Color = Color3.fromRGB(255, 255, 0)
 		pointLight.Brightness = 2
 		pointLight.Range = 10
 		pointLight.Parent = eggPart
 
-		-- Change egg color to gold
 		eggPart.Color = Color3.fromRGB(255, 255, 0)
 		eggPart.Material = Enum.Material.Neon
 
-		-- Add ProximityPrompt for Press E
 		local proximityPrompt = Instance.new("ProximityPrompt")
 		proximityPrompt.ActionText = "Collect Monster"
 		proximityPrompt.KeyboardKeyCode = Enum.KeyCode.E
@@ -319,7 +328,6 @@ local function makeEggReady(incubatorId, incubationData)
 		proximityPrompt.RequiresLineOfSight = false
 		proximityPrompt.Parent = eggPart
 
-		-- Handle E key press
 		proximityPrompt.Triggered:Connect(function(playerWhoPressed)
 			if playerWhoPressed == incubationData.player then
 				collectMonster(playerWhoPressed, incubatorId)
@@ -327,7 +335,6 @@ local function makeEggReady(incubatorId, incubationData)
 		end)
 	end
 
-	-- Move to ready eggs tracking
 	readyEggs[incubatorId] = incubationData
 	activeIncubations[incubatorId] = nil
 
@@ -399,7 +406,6 @@ placeEggRemote.OnServerEvent:Connect(function(player, eggId, incubatorId, incuba
 		eggData = {
 			type = eggTypeValue.Value,
 			rarity = rarityValue and rarityValue.Value or "Common",
-			-- Add these for hybrid eggs:
 			ivs = egg:FindFirstChild("IVs") and {
 				HPIV = egg.IVs:FindFirstChild("HPIV") and egg.IVs.HPIV.Value,
 				AttackIV = egg.IVs:FindFirstChild("AttackIV") and egg.IVs.AttackIV.Value,
@@ -428,7 +434,6 @@ RunService.Heartbeat:Connect(function()
 			incubationData.eggModel:SetAttribute("RemainingTime", math.max(0, timeRemaining))
 		end
 
-		-- Check if egg is ready for collection
 		if timeElapsed >= incubationData.hatchTime then
 			makeEggReady(incubatorId, incubationData)
 		end
